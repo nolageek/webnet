@@ -1,0 +1,34 @@
+uname -a (to get processor type _64 or not)
+
+wget http://download.r1soft.com/d/linux-agent/1.79.0-x86_64/linux-agent-64-1.79.0-centos.run
+or
+wget http://download.r1soft.com/d/linux-agent/1.79.0-x86/linux-agent-32-1.79.0-centos.run
+sh linux-agent-32-1.79.0-centos.run
+r1key -a 67.227.236.122:8080
+apf -a 67.227.236.122
+
+iptables -A INPUT -s 67.227.236.122 -m tcp -p tcp --dport 1167 -j ACCEPT
+
+grant all privileges on *.* to 'r1soft'@'%' identified by 'jd8sda56692kc8';
+
+
+if kernel module breaks:
+
+Weston: Well in summary here is basicly what we did
+Weston: we made sure that kernel-devel and kernel-headers were installed with
+Weston: rpm -qa | grep kernel
+Weston: Then we installed them
+Weston: yum install kernel-header kernel-devel -y
+Weston: we deleted all the old kernel modules when we did 
+Weston: rm -rf /lib/modules/buagent/*.ko
+Weston: then we built a new module
+Weston: r1soft-cki --get-module
+Weston: Then we told the agent to pick the module
+Weston: /lib/module/buagent/pickmodule
+Weston: Then we compared the module with the running kernel
+Weston: uname -r
+Weston: ls -lah /lib/modules/buagent/backupdriver.o
+Weston: Then we manually inserted the kernel module
+Weston: insmod /lib/modules/buagent/backupdriver.o
+Weston: then we started the agent.
+Weston: /etc/init.d/buagent start

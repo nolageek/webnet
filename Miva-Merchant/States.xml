@@ -1,0 +1,57 @@
+<Provision>
+	<Store code="storecode">
+		<State_DeleteAll />
+		<State_Add code="" name="Outside United States" />
+		<State_Add code="AK" name="Alaska" />
+		<State_Add code="AL" name="Alabama" />
+		<State_Add code="AR" name="Arkansas" />
+		<State_Add code="AZ" name="Arizona" />
+		<State_Add code="CA" name="California" />
+		<State_Add code="CO" name="Colorado" />
+		<State_Add code="CT" name="Connecticut" />
+		<State_Add code="DC" name="District Of Columbia" />
+		<State_Add code="DE" name="Delaware" />
+		<State_Add code="FL" name="Florida" />
+		<State_Add code="GA" name="Georgia" />
+		<State_Add code="HI" name="Hawaii" />
+		<State_Add code="IA" name="Iowa" />
+		<State_Add code="ID" name="Idaho" />
+		<State_Add code="IL" name="Illinois" />
+		<State_Add code="IN" name="Indiana" />
+		<State_Add code="KS" name="Kansas" />
+		<State_Add code="KY" name="Kentucky" />
+		<State_Add code="LA" name="Louisiana" />
+		<State_Add code="MA" name="Massachusetts" />
+		<State_Add code="MD" name="Maryland" />
+		<State_Add code="ME" name="Maine" />
+		<State_Add code="MI" name="Michigan" />
+		<State_Add code="MN" name="Minnesota" />
+		<State_Add code="MO" name="Missouri" />
+		<State_Add code="MS" name="Mississippi" />
+		<State_Add code="MT" name="Montana" />
+		<State_Add code="NC" name="North Carolina" />
+		<State_Add code="ND" name="North Dakota" />
+		<State_Add code="NE" name="Nebraska" />
+		<State_Add code="NH" name="New Hampshire" />
+		<State_Add code="NJ" name="New Jersey" />
+		<State_Add code="NM" name="New Mexico" />
+		<State_Add code="NV" name="Nevada" />
+		<State_Add code="NY" name="New York" />
+		<State_Add code="OH" name="Ohio" />
+		<State_Add code="OK" name="Oklahoma" />
+		<State_Add code="OR" name="Oregon" />
+		<State_Add code="PA" name="Pennsylvania" />
+		<State_Add code="RI" name="Rhode Island" />
+		<State_Add code="SC" name="South Carolina" />
+		<State_Add code="SD" name="South Dakota" />
+		<State_Add code="TN" name="Tennessee" />
+		<State_Add code="TX" name="Texas" />
+		<State_Add code="UT" name="Utah" />
+		<State_Add code="VA" name="Virginia" />
+		<State_Add code="VT" name="Vermont" />
+		<State_Add code="WA" name="Washington" />
+		<State_Add code="WI" name="Wisconsin" />
+		<State_Add code="WV" name="West Virginia" />
+		<State_Add code="WY" name="Wyoming" />
+	</Store>
+</Provision>

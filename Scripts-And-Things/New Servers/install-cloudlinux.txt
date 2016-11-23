@@ -1,0 +1,8 @@
+[CloudLinux]
+
+wget http://repo.cloudlinux.com/cloudlinux/sources/cln/cpanel2cl
+pico /etc/yum.conf (add plugins=1)
+sh cpanel2cl -k 5433-5588aa100d09baf5fccb9d0eca882d36
+shutdown -rf now
+yum install cpanel-lve
+yum install cpanel-lvemanager

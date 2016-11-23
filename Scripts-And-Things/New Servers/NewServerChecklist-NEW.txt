@@ -1,0 +1,93 @@
+New Server Checklist
+
+### Add server to DNS cluster
+
+### Manage Service SSL Certificates
+- Found in dropbox, "webnethost.crt"
+
+### Make sure latest versions of PHP/Apache
+- Use 5.2.x as some of the video scripts do not like 5.3 at this time.
+
+### Configure PHP and SuExec
+- PHP5 suPHP
+
+### PHP Configuration
+- safe_mode = off
+- open_basedir = (no value)
+- short_open_tag = on
+- output_buffering = on
+- register_argc_argv = On
+- max_execution_time = 1000 (Recommended or higher)
+- max_input_time = 1000 (Recommended or higher)
+- session.gc_maxlifetime = 15000 (Recommended or higher)
+- upload_max_filesize = 100M (Recommended or higher)
+- post_max_size = 100M (Recommended or higher)
+- register_globals = off
+
+
+### Apache Configuration:
+Global Configuration:
+- SSL Cipher Suite
+- TraceEnable OFF
+- ServerSignature OFF
+- ServerTokens ProductOnly
+- FileETag NONE
+- Directory '/' Options
+  Indexes OFF
+- MaxClients 250 
+
+### Video Scripts
+
+- LAME
+- LiquidWeb has requested we get them to add these, since they can affect cPanel updates:
+ FFMpeg
+ MPlayer
+ MP4Box
+ ImageMagick
+ Flvmdi
+ Qt-faststart
+
+### Easy Apache
+- enable mcrypt
+- GD Library
+
+### Service Manager
+- Enable Allow exim to listen on port [26]
+
+### FTP Server Configuration
+- Allow Anonymous Logins NO
+- Allow Anonymous Uploads NO
+
+### Copy multiple accounts/packages from another server
+- Copy Packages from potomac
+
+### Tweak Settings
+- Disk space usage warnings: 
+- Send bandwidth limit notification emails: 70, 80, 90, 95, 99
+- Enable FormMail-clone CGI
+- Default shell jailed
+- Max hourly emails: 500
+
+### Exim Configuration
+- SpamAssassin™ reject spam score threshold: 7
+- SpamAssassin™: ratelimit spam score threshold: 7
+- Reject remote mail sent to the server's hostname: ON
+- RBL: bl.spamcop.net: ON
+- RBL: zen.spamhaus.org: ON
+- SpamAssassin™: Forced Global ON
+
+
+### ADD TO NAGIOS
+- Dropbox: nrpe.txt nrpe.cfg check_eximmailqueue
+
+### Install R1Soft Agent
+- Dropbox: r1softv2.txt or r1softv3.txt
+
+### Install ConfigServer Scripts
+- Firewall: http://www.configserver.com/cp/csf.html
+- Mail Queues: http://www.configserver.com/cp/cmq.html
+- Mail Manage - http://www.configserver.com/cp/cmm.html
+- Mod Sec: http://www.configserver.com/cp/cmc.html
+
+### Other scripts
+- RKHunter - http://scriptmantra.info/2009/01/the-rkhunter-whm-interface/

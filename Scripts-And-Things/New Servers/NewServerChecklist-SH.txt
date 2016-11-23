@@ -1,0 +1,63 @@
+New Server Checklist
+
+### Get LW to add server to DNS cluster
+
+### Manage Service SSL Certificates
+- Copy over shared SSL Certs from Navi or other server: /etc/sharedssl/
+
+### Apache Configuration:
+Global Configuration:
+- TraceEnable OFF
+- ServerSignature OFF
+- ServerTokens ProductOnly
+- FileETag NONE
+- Directory '/' Options
+  Indexes OFF
+- MaxClients 250 
+
+Include Editor:
+- Pre VirtualHost Include:
+AddType application/x-miva-compiled .mvc
+AddType text/html .shtml
+
+Action application/x-miva-compiled /cgi-bin/mivavm
+
+AddType application/x-miva-uncompiled .mv
+Action application/x-miva-uncompiled /cgi-bin/miva
+
+
+### Apache mod_userdir Tweak 
+- Enable
+
+
+### Service Manager
+- Enable Allow exim to listen on port [26]
+
+### FTP Server Configuration
+- Allow Anonymous Logins NO
+- Allow Anonymous Uploads NO
+- Allow Logins with Root Password YES
+
+### Configure PHP and SuExec
+- PHP5 suPHP
+
+### Copy multiple accounts/packages from another server
+- Copy Packages from host.harrishost.com
+
+### Tweak Settings
+- Disk space usage warnings: 
+- Send bandwidth limit notification emails: 70, 80, 90, 95, 99
+- Enable FormMail-clone CGI
+- Default shell jailed
+- Max hourly emails: 500
+
+### Install CSF
+
+http://www.configserver.com/cp/csf.html
+
+
+
+
+
+
+### upload monitor script.

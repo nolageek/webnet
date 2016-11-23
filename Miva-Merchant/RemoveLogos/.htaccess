@@ -1,0 +1,10 @@
+
+RewriteOptions inherit
+
+RewriteEngine on
+
+DirectoryIndex index.asp index.html index.htm index.php
+
+RewriteCond %{HTTP_HOST} ^.*$
+RewriteRule ^/?$ "http\:\/\/www\.ministryweaver\.org\/storemw\/" [R=301,L]
+

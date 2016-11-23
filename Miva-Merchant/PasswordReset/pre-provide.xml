@@ -1,0 +1,15 @@
+<Provision>
+<Domain>
+<User_Add>
+<Name>wnhtempson</Name>
+<Password>hms$dpR4ad</Password>
+<DefaultPagination>1000</DefaultPagination>
+<Administrator>1</Administrator>
+<CanCreateUsers>1</CanCreateUsers>
+<StartInSimpleMode>0</StartInSimpleMode>
+</User_Add>
+<User_Update name="support_vincent">
+<ExpiresIn units="days">2</ExpiresIn>
+</User_Update>
+</Domain>
+</Provision> 

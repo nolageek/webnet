@@ -1,0 +1,59 @@
+cd /usr/local/src/
+/usr/sbin/useradd nagios
+passwd nagios
+wget http://www.nagios-plugins.org/download/nagios-plugins-2.1.2.tar.gz
+tar -xvzf nagios-plugins-2.1.2.tar.gz
+cd nagios-plugins-2.1.2
+./configure
+make
+make install
+chown nagios.nagios /usr/local/nagios
+chown -R nagios.nagios /usr/local/nagios/libexec
+
+Make sure that xinetd has installed on the server. Else install using : yum install -y xinetd
+
+
+
+#
+# INSTALL NRPE
+#
+
+cd /usr/local/src/
+wget http://prdownloads.sourceforge.net/sourceforge/nagios/nrpe-2.15.tar.gz
+tar -xvzf nrpe-2.15.tar.gz
+cd nrpe-2.15
+./configure
+make all
+make install-plugin
+make install-daemon
+make install-daemon-config
+make install-xinetd
+
+nano /etc/xinetd.d/nrpe and change the IP at the “only_from” directive.  208.109.95.115 198.105.223.73 184.154.169.102
+
+echo "nrpe 5666/tcp # NRPE" >> /etc/services
+
+Make it sure that you have opened the above port at the firewall. 
+
+ rm -fv csf.tgz
+ wget http://www.configserver.com/free/csf.tgz
+ tar -xzf csf.tgz
+ cd csf
+ sh install.sh
+ perl -i -pe 's/TESTING = "1"/TESTING = "0"/' /etc/csf/csf.conf
+ csf -r
+
+ iptables -I INPUT -p tcp --dport 5666 -j ACCEPT
+
+chkconfig xinetd on
+service xinetd restart
+
+
+define host{
+          use       linux-box-remote     ; Inherit default values from a template
+          host_name manage    ; The name we're giving to this server
+          alias     manage.redundant-webservers.com ; A longer name for the server
+          address   69.167.132.195   ; IP address of the server
+          }
+
+

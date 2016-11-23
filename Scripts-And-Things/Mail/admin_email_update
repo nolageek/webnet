@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# written by benjaminC 20130227 
+# purpose of this script is to update the passwords for all admin@ email addrs.
+# lw ticket ref: 3665443
+
+outfile="/root/admin-email-pass"
+if [ -e "$outfile" ]; then
+	echo "$outfile already exists, exiting"
+	exit 1
+fi
+
+# find real home directories, not symlinks
+for homedir in $(find / -maxdepth 1 -type d -name "home*")
+do
+	# find passwd files for email in those home directories
+	for file in $(find $homedir/*/etc/*/ -type f -name passwd)
+	do
+		# check for admin email addresses
+		line=$(cat $file |egrep "^admin:")
+		if [ "$line" ]; then
+			
+			domain=$(echo $file | cut -d'/' -f5)
+			user=$(echo $line | cut -d':' -f1)
+			# need to remove line so that we can readd
+			sed -i '/^admin:/d' $file
+			emailaddr="$user@$domain"
+			# sets password with length of 25 to hopefully avoid security issues
+			pass=$(cat /dev/urandom | tr -cd "[:alnum:]" | head -c 25)
+			echo "$emailaddr"
+			/scripts/addpop $emailaddr $pass --quota=250
+			exitcode=$?
+			if [ "$exitcode" -eq "0" ]; then
+				
+				echo "$emailaddr $pass" >> /root/admin-email-pass
+			else
+				echo "  [warning] :: could not set password for $emailaddr to $pass"
+				# restore line
+				echo "$line" >> $file
+			fi
+		
+		fi
+	done
+done
+

@@ -1,0 +1,98 @@
+All from within /etc/mail/spamassassin/
+
+wget http://www.peregrinehw.com/downloads/SpamAssassin/contrib/KAM.cf
+
+-------------------
+
+copy/paste dspam.cf and dspam.pm from here:
+http://codaset.com/elubow/dspam-spamassassin-result
+https://github.com/elubow/dspam-spamassassin
+
+.cf -> 
+nano /etc/mail/spamassassin/dspam.cf
+
+.pm -> 
+nano /usr/local/cpanel/3rdparty/perl/514/lib64/perl5/cpanel_lib/Mail/SpamAssassin/Plugin/dspam.pm
+
+-------------------
+
+edit init.pre
+
+add:
+
+# Added by Vincent
+loadplugin Mail::SpamAssassin::Plugin::ImageInfo
+loadplugin Mail::SpamAssassin::Plugin::RelayEval
+loadplugin Mail::SpamAssassin::Plugin::WLBLEval
+loadplugin Mail::SpamAssassin::Plugin::URIDNSBL
+loadplugin Mail::SpamAssassin::Plugin::dspam
+loadplugin Mail::SpamAssassin::Plugin::Rule2XSBody
+loadplugin Mail::SpamAssassin::Plugin::DCC
+
+run sa-update
+-------------------
+
+wget http://daryl.dostech.ca/sa-update/sare/GPG.KEY 
+sa-update --import GPG.KEY
+echo "70_sare_adult.cf.sare.sa-update.dostech.net" >> sare-sa-update-channels.txt
+sa-update --channelfile ./sare-sa-update-channels.txt --gpgkey 856AA88A
+
+-------------------
+
+Create a new file called custom.cf
+Add:
+
+
+-------------------
+
+spamassassin --lint
+
+
+========================================
+
+Installing razor2
+# Download the latest versions of razor-agents and razor-agents-sdk packages from http://razor.sourceforge.net/download/
+
+cd /usr/src/
+wget http://downloads.sourceforge.net/project/razor/razor-agents-sdk/2.07/razor-agents-sdk-2.07.tar.bz2
+wget http://downloads.sourceforge.net/project/razor/razor-agents/2.85/razor-agents-2.85.tar.bz2
+
+# Change the version number to the latest one
+cd /usr/src/
+bunzip2 razor-agents-sdk-2.07.tar.bz2
+tar -xvf razor-agents-sdk-2.07.tar
+cd razor-agents-sdk-2.07/
+perl Makefile.PL
+make
+make test
+make install
+
+# Change the version number to the latest one 
+cd /usr/src/
+bunzip2 razor-agents-2.85.tar.bz2
+tar -xvf razor-agents-2.85.tar
+cd razor-agents-2.85/
+# Update Digest::SHA1 before compile razor-agents
+/scripts/perlinstaller --force Digest::SHA1
+perl Makefile.PL
+make
+make test
+make install
+
+razor-admin -create
+mkdir /var/spool/mqueue
+chown mailnull:mail /var/spool/mqueue
+razor-admin -d -create -home=/var/spool/mqueue/.razor/
+razor-admin -register -home=/var/spool/mqueue/.razor/
+
+chmod 755 /var/spool/mqueue/.razor
+chown -R mailnull:mail /var/spool/mqueue/.razor
+cd /var/spool/mqueue/.razor
+touch razor-whitelist
+
+#Configure razor-agent.conf
+nano /var/spool/mqueue/.razor/razor-agent.conf
+Change or add these configurations.
+
+debuglevel = 1
+razorhome = /var/spool/mqueue/.razor

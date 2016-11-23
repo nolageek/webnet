@@ -1,0 +1,42 @@
+if there is more than one country, it should show the drop down with Select One in it. If it's just the US, it should show United States and work fine without filling any of the other stuff in. If they removed the blank state, though, that could cause the problem, too - because the Ship To would have a default state in there (probably Alaska). To solve this, simply add a state with no state code, and Outside US (or Select One) as the state name.
+
+
+If that doesn't work, check for the following in the page templates.
+
+
+
+For page OCST, on the "Customer Fields" tab, edit the template code to replace:
+
+<mvt:item name="countries" param="BillCountry" />
+
+or
+
+<input type="hidden" name="BillCountry" value="&mvte:global:BillCountry;">
+
+
+
+(Just search for billcountry)
+
+
+
+with:
+
+<select name="BillCountry">
+<mvt:if expr="g.BillCountry NE 'US'">
+<option value="" selected>&lt;Select One&gt;</option>
+        <option value="US">United States</option> <mvt:else>
+        <option value="">&lt;Select One&gt;</option>
+        <option value="US" selected>United States</option> </mvt:if> </select>
+
+For pages ACAD and ACED, use this code:
+
+(same thing as OCST, replace <mvt:item name="countries" param="BillCountry" /> with the code below on the "Customer Fields" tab)
+
+
+<select name="Customer_BillCountry">
+<mvt:if expr="g.Customer_BillCountry NE 'US'">
+        <option value="" selected>&lt;Select One&gt;</option>
+        <option value="US">United States</option> <mvt:else>
+        <option value="">&lt;Select One&gt;</option>
+        <option value="US" selected>United States</option> </mvt:if> </select>
+

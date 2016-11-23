@@ -1,0 +1,72 @@
+# Installing R1Soft Agent
+
+uname -a (to get processor type _64 or not)
+
+nano /etc/yum.repos.d/r1soft.repo
+[r1soft]
+name=R1Soft Repository Server
+baseurl=http://repo.r1soft.com/yum/stable/$basearch/
+enabled=1
+gpgcheck=0
+
+
+
+
+
+
+
+yum -y install r1soft-cdp-enterprise-agent
+csf -a 67.227.236.122
+
+csf -a 64.186.18.195
+r1soft-setup --get-key https://backup.webnethost.net:8080
+if get-key fails, copy and paste key from CDP server to:
+/usr/sbin/r1soft/conf/server.allow/37.x.x.x (37.x.x.x is the IP of CDP server)
+
+
+BACKUP:
+csf -a 192.31.132.177
+r1soft-setup --get-key http://192.31.132.177:8080
+grant all privileges on *.* to 'wnbackup'@'%' identified by 'kdkf2ig2j3';
+grant all privileges on *.* to 'wnbackup'@'localhost' identified by 'kdkf2ig2j3';
+
+BACKUP2:
+csf -a 192.31.132.173
+r1soft-setup --get-key https://192.31.132.173:8091
+grant all privileges on *.* to 'wnbackup'@'%' identified by 'kdkf2ig2j3';
+grant all privileges on *.* to 'wnbackup'@'localhost' identified by 'kdkf2ig2j3';
+
+homegallery:
+csf -a 184.154.207.154
+r1soft-setup --get-key http://184.154.207.154:8080/
+
+
+
+grant all privileges on *.* to 'r1soft'@'%' identified by 'kdkf2ig2j3';
+
+
+
+
+
+downgrading r1soft
+
+As a temporary workaround, please downgrade to the 4.2.1.17820 agent and the backups should work again.
+
+1. Edit your /etc/yum.repos.d/r1soft.repo (or wherever you download your RPMs from) and comment out the baseurl and add a line below it eg:
+Code:
+#baseurl=http://repo.r1soft.com/yum/stable/$basearch/
+baseurl=http://repo.r1soft.com/release/4.2.1/2012236/yum/stayble/$basearch/
+
+2. Delete /var/cache/yum/r1soft/repomd.xml so yum doesn't ignore the older files that it finds
+
+3. Then remove the new agent files:
+Code:
+yum remove serverbackup*
+yum remove r1soft*
+rm /usr/sbin/r1soft -rf
+
+4. re-install the agent from the old repo:
+yum install r1soft-enterprise-agent
+r1soft-setup --get-module
+
+5. Start the agent and r-aquire the key from your CDP server and you should be back in business.
